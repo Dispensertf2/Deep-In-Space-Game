@@ -1,0 +1,33 @@
+Development Checklist:
+
+Add more to any TODO list if need be...
+
+TODO -- Game Foundation:
+
+-Sprite Drawing -- DONE
+-Basic Screen Generating (Eg. creating an array for every block to be placed)
+-Add camera and camera controls
+-Create basic entities (like tables and plants and what not)
+-Create NPC foundation (NPC data and display it on the screen)
+
+TODO -- World generation:
+
+-Create room types
+-Generate Barracks, Engine, and Pilot room
+-Create respective entities for each room
+
+TODO -- NPCS:
+
+-Create NPC Types and Stats
+-Add NPC Jobs and inventorys 
+-Give NPC pathfinding
+-Work on NPC task list (Eg. What are their jobs for the day)
+
+TODO -- World Building:
+
+-Add Day and Night Cycle
+
+TODO -- Gameplay Loop: 
+
+-Add way to collect resources
+-Add building rooms
