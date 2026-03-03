@@ -6,10 +6,12 @@
 
 //local headers
 #include "draw.hpp"
+#include "tile.hpp"
 
 const int tileScreenWidth = 25;
 const int tileScreenHeight = 14;
 
+std::vector<tile> world; 
 
 int main(void) {
     
@@ -33,10 +35,8 @@ int main(void) {
 
             ClearBackground(BLACK);
 
-            for (int y=0;y<14;y++) {
-                for (int x=0;x<25;x++) {
-                    drawSpriteRaw(newSprite,x*32,y*32);
-                }
+            for (int i=0; i<world.size();i++) {
+
             }
 
         EndDrawing();
