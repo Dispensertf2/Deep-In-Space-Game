@@ -1,7 +1,6 @@
 #include <raylib.h>
 #include <iostream>
 
-#include "draw.hpp"
 
 typedef struct tile {
     //tile width and height are stored within sprite sheet
@@ -17,3 +16,5 @@ typedef struct tile {
 
 
 } tile;
+
+tile generateTile(spriteSheet tileSprite, float x, float y);
