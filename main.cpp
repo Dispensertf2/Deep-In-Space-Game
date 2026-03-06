@@ -10,6 +10,7 @@
 #include "draw.hpp"
 #include "tile.hpp"
 #include "entity.hpp"
+#include "generateRoom.hpp"
 
 const int tileScreenWidth = 25;
 const int tileScreenHeight = 14;
@@ -32,7 +33,14 @@ bool getCollision(Rectangle a, Rectangle b) { //obviously copied collision code
 
 
 void tickUpdate() {
-    std::cout << "Tick" << std::endl;
+    //std::cout << "Tick" << std::endl;
+}
+
+//pushes the room buffer from generate room into world array
+void pushRoomBuffer(std::vector<tile> roomBuffer) {
+    for (int i=0;i<roomBuffer.size();i++) {
+        world.push_back(roomBuffer[i]);
+    }
 }
 
 
@@ -53,8 +61,9 @@ int main(void) {
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
-    spriteSheet nullTexture;
-    nullTexture.sprite = LoadTexture("./Assets/null-sheet.png");
+    spriteSheet wallTexture;
+    wallTexture.sprite = LoadTexture("./Assets/shipWall1.png");
+    wallTexture.columns = 3;
 
     spriteSheet cursorSprite;
     cursorSprite.sprite = LoadTexture("./Assets/cursor.png");
@@ -67,20 +76,22 @@ int main(void) {
 
 
     //just for testing world array
-    world.push_back(generateTile(nullTexture,0,0));
+
+    pushRoomBuffer(generateRoom(wallTexture,0,0,9,6,2));
 
     objects.push_back(generateObject(plant, 32, 0));
 
     entities.push_back(generateNPC(person,64,0));
 
     
-
+    //camera variables 
     float cameraX = 0.0f;
     float cameraY = 0.0f;
     float cameraSpeed = 200.0f;
 
-    float dt = GetFrameTime();
+    float dt = GetFrameTime(); //delta time
 
+    //collision rectangle for the cursor
     Rectangle cursorRect = {0,0,32,32};
 
     float tickTime = 0.f;
@@ -106,10 +117,12 @@ int main(void) {
 
         }
         
+        //updates cursor rectangle to camera position, weird values because of collision and what not
         Rectangle cursorRect = { (round(cameraX/tileSize)*tileSize)+1,(round(cameraY/tileSize)*tileSize)+1,30,30};
         
         camera.target = {cameraX, cameraY};
 
+        //if enough time has passed the tick function is called and the tick time variable is reset
         if (tickTime >= tickReset) {
             tickUpdate();
             tickTime = 0;

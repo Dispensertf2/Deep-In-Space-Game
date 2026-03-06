@@ -15,7 +15,9 @@ TODO -- Game Foundation:
 
 TODO -- World generation:
 
+-Create room generation -- DONE
 -Create room types
+-Connect rooms together somehow
 -Generate Barracks, Engine, and Pilot room
 -Create respective entities for each room
 
