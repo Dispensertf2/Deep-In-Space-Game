@@ -9,3 +9,12 @@ object generateObject(spriteSheet sprite, float x, float y) {
 
     return newObject;
 }
+
+npc generateNPC(spriteSheet sprite, float x, float y) {
+    npc newNPC;
+    newNPC.sprite = sprite;
+    newNPC.x = x;
+    newNPC.y = y;
+
+    return newNPC;
+}

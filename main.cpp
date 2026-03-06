@@ -17,6 +17,7 @@ const int tileSize = 32;
 
 std::vector<tile> world; //array for world tiles and nothing else
 std::vector<object> objects; //array for objects such as plants and work benches 
+std::vector<npc> entities;
 
 bool getCollision(Rectangle a, Rectangle b) { //obviously copied collision code
     if (a.x + a.width >= b.x &&     // r1 right edge past r2 left
@@ -27,6 +28,11 @@ bool getCollision(Rectangle a, Rectangle b) { //obviously copied collision code
     }
     return false;
 
+}
+
+
+void tickUpdate() {
+    std::cout << "Tick" << std::endl;
 }
 
 
@@ -47,26 +53,27 @@ int main(void) {
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
-    //loads in null texture not final
-    spriteSheet newSprite;
-    newSprite.sprite = LoadTexture("./Assets/null.png");
-    newSprite.width = tileSize;
-    newSprite.height = tileSize;
+    spriteSheet nullTexture;
+    nullTexture.sprite = LoadTexture("./Assets/null-sheet.png");
 
     spriteSheet cursorSprite;
     cursorSprite.sprite = LoadTexture("./Assets/cursor.png");
-    cursorSprite.width = tileSize;
-    cursorSprite.height = tileSize;
 
     spriteSheet plant;
     plant.sprite = LoadTexture("./Assets/testentity.png");
-    plant.width = tileSize;
-    plant.height = tileSize;
+
+    spriteSheet person;
+    person.sprite = LoadTexture("./Assets/testguy.png");
+
 
     //just for testing world array
-    world.push_back(generateTile(newSprite,0,0));
+    world.push_back(generateTile(nullTexture,0,0));
 
     objects.push_back(generateObject(plant, 32, 0));
+
+    entities.push_back(generateNPC(person,64,0));
+
+    
 
     float cameraX = 0.0f;
     float cameraY = 0.0f;
@@ -76,11 +83,14 @@ int main(void) {
 
     Rectangle cursorRect = {0,0,32,32};
 
-    
+    float tickTime = 0.f;
+    float tickReset = 0.25f;
 
     while (!WindowShouldClose())   
     {
         dt = GetFrameTime();
+
+        tickTime += GetFrameTime();
 
 
         if (currentScene == 0) { //all world controls go in here
@@ -99,6 +109,11 @@ int main(void) {
         Rectangle cursorRect = { (round(cameraX/tileSize)*tileSize)+1,(round(cameraY/tileSize)*tileSize)+1,30,30};
         
         camera.target = {cameraX, cameraY};
+
+        if (tickTime >= tickReset) {
+            tickUpdate();
+            tickTime = 0;
+        }
        
         BeginDrawing();
 
@@ -107,36 +122,26 @@ int main(void) {
             BeginMode2D(camera); //Everything that needs to be rendered by camera is done in here
                 if (currentScene == 0) {
                     for (int t=0;t<world.size();t++) { //iterates through each tile and draws it
-                        drawSpriteRaw(world[t].tileSprite,world[t].x,world[t].y);
+                        drawSpriteRaw(world[t].tileSprite,world[t].x,world[t].y,world[t].tileSprite.indexX, world[t].tileSprite.indexY);
                         
                     }
                     for (int o=0;o<objects.size();o++) { //iterates through each object and draws it
                         drawSpriteRaw(objects[o].sprite,objects[o].x,objects[o].y);
                         
                     }
+                    for (int p=0;p<entities.size();p++) {
+                        drawSpriteRaw(entities[p].sprite,entities[p].x,entities[p].y);
+
+                    }
                     drawSpriteRaw(cursorSprite,cursorRect.x-1,cursorRect.y-1);
 
                 }
-            
-
             EndMode2D();
             
-
-            std::cout << GetFPS() << std::endl;
-
-
-
+            //std::cout << GetFPS() << std::endl;
         EndDrawing();
        
     }
-
-    
-
     CloseWindow();       
-    
-
     return 0;
 }
-
-
-

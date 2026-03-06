@@ -3,10 +3,12 @@
 
 typedef struct spriteSheet {
     Texture2D sprite;
-    float width;
-    float height;
+    float width = 32.f;
+    float height = 32.f;
     float rows = 1; //just defaults the sprite sheet to single row and column
     float columns = 1;
+    float indexX = 0;
+    float indexY = 0;
 
 } Sprite;
 

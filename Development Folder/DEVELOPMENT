@@ -8,7 +8,10 @@ TODO -- Game Foundation:
 -Basic Screen Generating (Eg. creating an array for every block to be placed) -- DONE
 -Add camera and camera controls -- DONE TODO: Make camera controls more mouse centric
 -Create basic entities (like tables and plants and what not) -- IN PROGRESS
--Create NPC foundation (NPC data and display it on the screen)
+-Create NPC foundation (NPC data and display it on the screen) -- DONE
+-Add Items 
+-Add selection menu
+-Add inventory 
 
 TODO -- World generation:
 
